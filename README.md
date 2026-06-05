@@ -3,6 +3,7 @@
 > **"더 늦기 전에, 당신의 자세를 '자세히' 보세요."**  
 > **자세히 봐**는 딥러닝 기반 실시간 관절 인식(Vision AI) 기술과 정형외과 전문 RAG 챗봇을 결합한 스마트 자세 교정 솔루션의 소개 및 체험을 위한 SaaS 랜딩페이지입니다.  
 > 강렬한 색감과 두꺼운 테두리, 하드 섀도우(Hard Shadow)가 특징인 **네오 브루탈리즘(Neo-Brutalism)** 스타일로 구현되어 감각적이고 트렌디한 사용자 경험(UX)을 선사합니다.
+<img width="2372" height="3682" alt="스크린샷_5-6-2026_144527_ch08-saas-landing-page vercel app" src="https://github.com/user-attachments/assets/60e45c20-d66f-47ef-a0ae-0e84b776f6d0" />
 
 ---
 
