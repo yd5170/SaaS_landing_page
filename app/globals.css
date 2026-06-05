@@ -1,0 +1,30 @@
+@import "tailwindcss";
+
+:root {
+  --background: #ffffff;
+  --foreground: #171717;
+}
+
+@theme inline {
+  --font-sans: var(--font-noto-sans-kr);
+  --font-mono: var(--font-geist-mono);
+}
+
+body {
+  font-family: var(--font-noto-sans-kr), sans-serif;
+  color: #171717;
+}
+
+/* Base neo-brutalism utility classes if needed, though Tailwind inline classes are sufficient */
+.neo-brutal {
+  border: 2px solid #1a1a1a;
+  box-shadow: 4px 4px 0px #1a1a1a;
+}
+.neo-brutal-hover {
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+.neo-brutal-hover:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: 6px 6px 0px #1a1a1a;
+}
+

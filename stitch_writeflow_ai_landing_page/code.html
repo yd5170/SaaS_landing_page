@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+
+<html lang="ko"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>WriteFlow - AI 글쓰기 어시스턴트</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-tertiary": "#ffffff",
+                        "primary": "#3525cd",
+                        "surface-container-high": "#e2e7ff",
+                        "surface-container-low": "#f2f3ff",
+                        "on-primary": "#ffffff",
+                        "on-background": "#131b2e",
+                        "tertiary-container": "#a44100",
+                        "on-surface": "#131b2e",
+                        "on-tertiary-fixed": "#351000",
+                        "tertiary": "#7e3000",
+                        "on-error": "#ffffff",
+                        "primary-fixed-dim": "#c3c0ff",
+                        "on-secondary-container": "#fffbff",
+                        "surface-container": "#eaedff",
+                        "tertiary-fixed-dim": "#ffb695",
+                        "inverse-primary": "#c3c0ff",
+                        "secondary-container": "#9e41f5",
+                        "on-primary-fixed-variant": "#3323cc",
+                        "primary-fixed": "#e2dfff",
+                        "on-error-container": "#93000a",
+                        "surface": "#faf8ff",
+                        "background": "#faf8ff",
+                        "on-secondary": "#ffffff",
+                        "surface-bright": "#faf8ff",
+                        "surface-container-lowest": "#ffffff",
+                        "surface-tint": "#4d44e3",
+                        "outline-variant": "#c7c4d8",
+                        "primary-container": "#4f46e5",
+                        "on-primary-container": "#dad7ff",
+                        "on-surface-variant": "#464555",
+                        "inverse-surface": "#283044",
+                        "outline": "#777587",
+                        "error": "#ba1a1a",
+                        "on-tertiary-fixed-variant": "#7b2f00",
+                        "on-primary-fixed": "#0f0069",
+                        "secondary-fixed": "#f0dbff",
+                        "surface-variant": "#dae2fd",
+                        "inverse-on-surface": "#eef0ff",
+                        "on-tertiary-container": "#ffd2be",
+                        "on-secondary-fixed-variant": "#6800b4",
+                        "secondary-fixed-dim": "#ddb8ff",
+                        "on-secondary-fixed": "#2c0051",
+                        "surface-dim": "#d2d9f4",
+                        "surface-container-highest": "#dae2fd",
+                        "tertiary-fixed": "#ffdbcc",
+                        "error-container": "#ffdad6",
+                        "secondary": "#831ada"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "gutter": "24px",
+                        "stack-md": "16px",
+                        "stack-sm": "8px",
+                        "section-padding-mobile": "64px",
+                        "section-padding-desktop": "120px",
+                        "container-max": "1280px",
+                        "stack-lg": "32px"
+                    },
+                    "fontFamily": {
+                        "body-md": ["Inter"],
+                        "display-lg": ["Inter"],
+                        "headline-xl": ["Inter"],
+                        "headline-md": ["Inter"],
+                        "body-lg": ["Inter"],
+                        "headline-xl-mobile": ["Inter"],
+                        "display-lg-mobile": ["Inter"],
+                        "label-sm": ["Inter"]
+                    },
+                    "fontSize": {
+                        "body-md": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                        "display-lg": ["64px", { "lineHeight": "72px", "letterSpacing": "-0.02em", "fontWeight": "800" }],
+                        "headline-xl": ["48px", { "lineHeight": "56px", "letterSpacing": "-0.01em", "fontWeight": "700" }],
+                        "headline-md": ["30px", { "lineHeight": "38px", "fontWeight": "600" }],
+                        "body-lg": ["18px", { "lineHeight": "28px", "fontWeight": "400" }],
+                        "headline-xl-mobile": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "700" }],
+                        "display-lg-mobile": ["40px", { "lineHeight": "48px", "letterSpacing": "-0.02em", "fontWeight": "800" }],
+                        "label-sm": ["14px", { "lineHeight": "20px", "letterSpacing": "0.05em", "fontWeight": "600" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+</head>
+<body class="bg-background text-on-background font-body-md antialiased pt-20">
+<!-- TopNavBar -->
+<nav class="fixed top-0 w-full z-50 bg-surface/80 backdrop-blur-md border-b border-outline-variant/30 shadow-sm">
+<div class="flex justify-between items-center max-w-container-max mx-auto px-gutter h-20">
+<div class="text-headline-md font-headline-md font-extrabold text-primary tracking-tight">WriteFlow</div>
+<div class="hidden md:flex gap-6 items-center">
+<a class="text-on-surface-variant font-medium hover:text-primary transition-colors duration-200" href="#">Features</a>
+<a class="text-on-surface-variant font-medium hover:text-primary transition-colors duration-200" href="#">Solutions</a>
+<a class="text-on-surface-variant font-medium hover:text-primary transition-colors duration-200" href="#">Pricing</a>
+<a class="text-on-surface-variant font-medium hover:text-primary transition-colors duration-200" href="#">Resources</a>
+</div>
+<button class="bg-gradient-to-r from-primary to-secondary text-on-primary font-label-sm text-label-sm px-6 py-3 rounded-full hover:brightness-110 active:scale-95 transition-all duration-200">Get Started</button>
+</div>
+</nav>
+<!-- Hero Section -->
+<section class="relative pt-section-padding-mobile md:pt-section-padding-desktop pb-section-padding-mobile md:pb-section-padding-desktop overflow-hidden">
+<div class="absolute inset-0 bg-gradient-to-b from-primary-fixed/30 to-surface-container/10 -z-10"></div>
+<div class="max-w-container-max mx-auto px-gutter text-center relative z-10">
+<h1 class="font-display-lg-mobile text-display-lg-mobile md:font-display-lg md:text-display-lg text-on-background mb-stack-md max-w-4xl mx-auto leading-tight">
+                AI와 함께 더 빠르게 <br class="hidden md:block"/>더 잘 쓰세요
+            </h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant mb-stack-lg max-w-2xl mx-auto">
+                아이디어를 몇 초 만에 완성된 콘텐츠로 바꿔보세요. 유창하고 창의적인 글쓰기를 위한 완벽한 캔버스.
+            </p>
+<div class="flex flex-col sm:flex-row justify-center items-center gap-4">
+<button class="w-full sm:w-auto bg-gradient-to-r from-primary to-secondary text-on-primary font-label-sm text-label-sm px-8 py-4 rounded-full hover:brightness-110 shadow-lg shadow-primary/20 hover:shadow-xl hover:shadow-primary/30 hover:-translate-y-1 transition-all duration-300">
+                    무료 체험 시작
+                </button>
+<button class="w-full sm:w-auto border border-outline-variant text-on-background font-label-sm text-label-sm px-8 py-4 rounded-full hover:bg-surface-variant/50 transition-colors duration-200 flex items-center justify-center gap-2">
+<span class="material-symbols-outlined">play_circle</span>
+                    데모 보기
+                </button>
+</div>
+</div>
+</section>
+<!-- Features Section -->
+<section class="py-section-padding-mobile md:py-section-padding-desktop bg-surface-container-lowest">
+<div class="max-w-container-max mx-auto px-gutter">
+<div class="text-center mb-16">
+<span class="text-primary font-label-sm text-label-sm uppercase tracking-widest mb-stack-sm block">Features</span>
+<h2 class="font-headline-xl-mobile text-headline-xl-mobile md:font-headline-xl md:text-headline-xl text-on-background">완벽한 글쓰기를 위한 기능</h2>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+<!-- Feature 1 -->
+<div class="bg-surface rounded-xl p-8 border border-outline-variant/50 shadow-sm hover:shadow-lg hover:shadow-primary/5 hover:-translate-y-1 transition-all duration-300 group">
+<div class="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center text-primary mb-6 group-hover:scale-110 transition-transform duration-300">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">edit_document</span>
+</div>
+<h3 class="font-headline-md text-headline-md text-on-background mb-4 text-xl">AI 글쓰기 어시스턴트</h3>
+<p class="font-body-md text-body-md text-on-surface-variant">클릭 한 번으로 콘텐츠 생성. 아이디어만 던져주면 AI가 매끄러운 글로 완성합니다.</p>
+</div>
+<!-- Feature 2 -->
+<div class="bg-surface rounded-xl p-8 border border-outline-variant/50 shadow-sm hover:shadow-lg hover:shadow-primary/5 hover:-translate-y-1 transition-all duration-300 group">
+<div class="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center text-primary mb-6 group-hover:scale-110 transition-transform duration-300">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">spellcheck</span>
+</div>
+<h3 class="font-headline-md text-headline-md text-on-background mb-4 text-xl">문법 검사</h3>
+<p class="font-body-md text-body-md text-on-surface-variant">언제나 완벽한 문법. 오탈자부터 문맥에 맞지 않는 표현까지 실시간으로 교정합니다.</p>
+</div>
+<!-- Feature 3 -->
+<div class="bg-surface rounded-xl p-8 border border-outline-variant/50 shadow-sm hover:shadow-lg hover:shadow-primary/5 hover:-translate-y-1 transition-all duration-300 group">
+<div class="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center text-primary mb-6 group-hover:scale-110 transition-transform duration-300">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">tune</span>
+</div>
+<h3 class="font-headline-md text-headline-md text-on-background mb-4 text-xl">브랜드 보이스</h3>
+<p class="font-body-md text-body-md text-on-surface-variant">브랜드 목소리에 맞게 조절. 당신만의 톤앤매너를 학습하여 일관된 메시지를 전달합니다.</p>
+</div>
+<!-- Feature 4 -->
+<div class="bg-surface rounded-xl p-8 border border-outline-variant/50 shadow-sm hover:shadow-lg hover:shadow-primary/5 hover:-translate-y-1 transition-all duration-300 group">
+<div class="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center text-primary mb-6 group-hover:scale-110 transition-transform duration-300">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">translate</span>
+</div>
+<h3 class="font-headline-md text-headline-md text-on-background mb-4 text-xl">다국어 지원</h3>
+<p class="font-body-md text-body-md text-on-surface-variant">50개 이상 언어로 작성합니다. 글로벌 독자를 위한 자연스러운 다국어 번역 및 작성.</p>
+</div>
+<!-- Feature 5 -->
+<div class="bg-surface rounded-xl p-8 border border-outline-variant/50 shadow-sm hover:shadow-lg hover:shadow-primary/5 hover:-translate-y-1 transition-all duration-300 group">
+<div class="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center text-primary mb-6 group-hover:scale-110 transition-transform duration-300">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">dashboard_customize</span>
+</div>
+<h3 class="font-headline-md text-headline-md text-on-background mb-4 text-xl">템플릿</h3>
+<p class="font-body-md text-body-md text-on-surface-variant">100개 이상 바로 쓸 수 있는 템플릿. 블로그, 이메일, 광고 카피 등 용도에 맞게 시작하세요.</p>
+</div>
+<!-- Feature 6 -->
+<div class="bg-surface rounded-xl p-8 border border-outline-variant/50 shadow-sm hover:shadow-lg hover:shadow-primary/5 hover:-translate-y-1 transition-all duration-300 group">
+<div class="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center text-primary mb-6 group-hover:scale-110 transition-transform duration-300">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">group</span>
+</div>
+<h3 class="font-headline-md text-headline-md text-on-background mb-4 text-xl">협업</h3>
+<p class="font-body-md text-body-md text-on-surface-variant">실시간으로 함께 작업합니다. 팀원들과 아이디어를 나누고 피드백을 즉시 반영하세요.</p>
+</div>
+</div>
+</div>
+</section>
+<!-- Pricing Section -->
+<section class="py-section-padding-mobile md:py-section-padding-desktop bg-surface">
+<div class="max-w-container-max mx-auto px-gutter">
+<div class="text-center mb-12">
+<h2 class="font-headline-xl-mobile text-headline-xl-mobile md:font-headline-xl md:text-headline-xl text-on-background mb-6">합리적인 요금제</h2>
+<div class="inline-flex bg-surface-container p-1 rounded-full border border-outline-variant/50">
+<button class="px-6 py-2 rounded-full bg-surface shadow-sm font-label-sm text-label-sm text-on-surface">월간</button>
+<button class="px-6 py-2 rounded-full font-label-sm text-label-sm text-on-surface-variant hover:text-on-surface transition-colors">연간 (20% 할인)</button>
+</div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+<!-- Free Tier -->
+<div class="bg-surface-container-lowest rounded-xl p-8 border border-outline-variant shadow-sm flex flex-col">
+<h3 class="font-headline-md text-headline-md text-on-background text-xl mb-2">Free</h3>
+<div class="mb-6">
+<span class="font-display-lg text-display-lg text-on-background">$0</span>
+<span class="text-on-surface-variant">/월</span>
+</div>
+<ul class="space-y-4 mb-8 flex-grow">
+<li class="flex items-center gap-3 text-body-md text-on-surface-variant">
+<span class="material-symbols-outlined text-primary text-xl">check_circle</span>
+                            월 5개 문서
+                        </li>
+<li class="flex items-center gap-3 text-body-md text-on-surface-variant">
+<span class="material-symbols-outlined text-primary text-xl">check_circle</span>
+                            기본 문법 검사
+                        </li>
+<li class="flex items-center gap-3 text-body-md text-on-surface-variant">
+<span class="material-symbols-outlined text-primary text-xl">check_circle</span>
+                            이메일 지원
+                        </li>
+</ul>
+<button class="w-full py-3 rounded-lg border border-primary text-primary font-label-sm text-label-sm hover:bg-primary/5 transition-colors">현재 플랜</button>
+</div>
+<!-- Pro Tier -->
+<div class="bg-surface-container-lowest rounded-xl p-8 border-2 border-primary shadow-lg shadow-primary/10 relative flex flex-col transform md:-translate-y-4">
+<div class="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-gradient-to-r from-primary to-secondary text-on-primary px-4 py-1 rounded-full font-label-sm text-xs">가장 인기</div>
+<h3 class="font-headline-md text-headline-md text-on-background text-xl mb-2 mt-2">Pro</h3>
+<div class="mb-6">
+<span class="font-display-lg text-display-lg text-on-background">$19</span>
+<span class="text-on-surface-variant">/월</span>
+</div>
+<ul class="space-y-4 mb-8 flex-grow">
+<li class="flex items-center gap-3 text-body-md text-on-background font-medium">
+<span class="material-symbols-outlined text-primary text-xl">check_circle</span>
+                            무제한 문서
+                        </li>
+<li class="flex items-center gap-3 text-body-md text-on-background font-medium">
+<span class="material-symbols-outlined text-primary text-xl">check_circle</span>
+                            고급 AI 기능
+                        </li>
+<li class="flex items-center gap-3 text-body-md text-on-background font-medium">
+<span class="material-symbols-outlined text-primary text-xl">check_circle</span>
+                            우선 지원
+                        </li>
+<li class="flex items-center gap-3 text-body-md text-on-background font-medium">
+<span class="material-symbols-outlined text-primary text-xl">check_circle</span>
+                            API 액세스
+                        </li>
+</ul>
+<button class="w-full py-3 rounded-lg bg-gradient-to-r from-primary to-secondary text-on-primary font-label-sm text-label-sm hover:brightness-110 transition-all shadow-md">Pro 시작하기</button>
+</div>
+<!-- Enterprise Tier -->
+<div class="bg-surface-container-lowest rounded-xl p-8 border border-outline-variant shadow-sm flex flex-col">
+<h3 class="font-headline-md text-headline-md text-on-background text-xl mb-2">Enterprise</h3>
+<div class="mb-6">
+<span class="font-display-lg text-display-lg text-on-background">$49</span>
+<span class="text-on-surface-variant">/월</span>
+</div>
+<ul class="space-y-4 mb-8 flex-grow">
+<li class="flex items-center gap-3 text-body-md text-on-surface-variant">
+<span class="material-symbols-outlined text-primary text-xl">check_circle</span>
+                            Pro 전체 포함
+                        </li>
+<li class="flex items-center gap-3 text-body-md text-on-surface-variant">
+<span class="material-symbols-outlined text-primary text-xl">check_circle</span>
+                            맞춤 AI 학습
+                        </li>
+<li class="flex items-center gap-3 text-body-md text-on-surface-variant">
+<span class="material-symbols-outlined text-primary text-xl">check_circle</span>
+                            전담 매니저
+                        </li>
+<li class="flex items-center gap-3 text-body-md text-on-surface-variant">
+<span class="material-symbols-outlined text-primary text-xl">check_circle</span>
+                            SSO 지원
+                        </li>
+</ul>
+<button class="w-full py-3 rounded-lg border border-primary text-primary font-label-sm text-label-sm hover:bg-primary/5 transition-colors">문의하기</button>
+</div>
+</div>
+</div>
+</section>
+<!-- FAQ Section -->
+<section class="py-section-padding-mobile md:py-section-padding-desktop bg-surface-container-lowest">
+<div class="max-w-3xl mx-auto px-gutter">
+<h2 class="font-headline-xl-mobile text-headline-xl-mobile md:font-headline-xl md:text-headline-xl text-on-background mb-12 text-center">자주 묻는 질문</h2>
+<div class="space-y-4">
+<!-- FAQ Item 1 -->
+<div class="border-b border-outline-variant/30 pb-4 group">
+<button class="w-full flex justify-between items-center text-left py-4 hover:text-primary transition-colors">
+<span class="font-headline-md text-headline-md text-lg text-on-background group-hover:text-primary transition-colors">무료 체험은 어떻게 진행되나요?</span>
+<span class="material-symbols-outlined text-outline group-hover:text-primary transition-transform duration-300">add</span>
+</button>
+</div>
+<!-- FAQ Item 2 -->
+<div class="border-b border-outline-variant/30 pb-4 group">
+<button class="w-full flex justify-between items-center text-left py-4 hover:text-primary transition-colors">
+<span class="font-headline-md text-headline-md text-lg text-on-background group-hover:text-primary transition-colors">언제든지 구독을 취소할 수 있나요?</span>
+<span class="material-symbols-outlined text-outline group-hover:text-primary transition-transform duration-300">add</span>
+</button>
+</div>
+<!-- FAQ Item 3 -->
+<div class="border-b border-outline-variant/30 pb-4 group">
+<button class="w-full flex justify-between items-center text-left py-4 hover:text-primary transition-colors">
+<span class="font-headline-md text-headline-md text-lg text-on-background group-hover:text-primary transition-colors">제 데이터는 안전한가요?</span>
+<span class="material-symbols-outlined text-outline group-hover:text-primary transition-transform duration-300">add</span>
+</button>
+</div>
+<!-- FAQ Item 4 -->
+<div class="border-b border-outline-variant/30 pb-4 group">
+<button class="w-full flex justify-between items-center text-left py-4 hover:text-primary transition-colors">
+<span class="font-headline-md text-headline-md text-lg text-on-background group-hover:text-primary transition-colors">환불이 가능합니까?</span>
+<span class="material-symbols-outlined text-outline group-hover:text-primary transition-transform duration-300">add</span>
+</button>
+</div>
+<!-- FAQ Item 5 -->
+<div class="border-b border-outline-variant/30 pb-4 group">
+<button class="w-full flex justify-between items-center text-left py-4 hover:text-primary transition-colors">
+<span class="font-headline-md text-headline-md text-lg text-on-background group-hover:text-primary transition-colors">어떤 결제 수단을 지원하나요?</span>
+<span class="material-symbols-outlined text-outline group-hover:text-primary transition-transform duration-300">add</span>
+</button>
+</div>
+</div>
+</div>
+</section>
+<!-- Bottom CTA -->
+<section class="py-section-padding-mobile md:py-section-padding-desktop relative overflow-hidden bg-gradient-to-br from-primary-fixed/40 via-surface-container/20 to-secondary-fixed/30">
+<div class="max-w-container-max mx-auto px-gutter text-center relative z-10">
+<h2 class="font-headline-xl-mobile text-headline-xl-mobile md:font-headline-xl md:text-headline-xl text-on-background mb-stack-md">글쓰기를 혁신할 준비가 되셨나요?</h2>
+<p class="font-body-lg text-body-lg text-on-surface-variant mb-stack-lg max-w-xl mx-auto">10,000명 이상의 작가와 함께하세요.</p>
+<div class="flex flex-col items-center gap-3">
+<button class="bg-gradient-to-r from-primary to-secondary text-on-primary font-label-sm text-label-sm px-10 py-4 rounded-full hover:brightness-110 shadow-lg shadow-primary/20 hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
+                    무료 체험 시작
+                </button>
+<span class="font-body-md text-body-md text-sm text-outline">신용카드 필요 없음</span>
+</div>
+</div>
+</section>
+<!-- Footer -->
+<footer class="w-full bg-surface-container-lowest dark:bg-background border-t border-outline-variant dark:border-outline/20">
+<div class="max-w-container-max mx-auto px-gutter py-stack-lg flex flex-col md:flex-row justify-between items-center gap-stack-md">
+<div class="text-headline-md font-headline-md font-bold text-primary dark:text-primary-fixed-dim">
+                WriteFlow
+            </div>
+<div class="flex gap-6">
+<a class="text-on-surface-variant dark:text-surface-variant font-body-md text-body-md hover:text-primary dark:hover:text-primary-fixed-dim transition-all underline decoration-2 underline-offset-4" href="#">Product</a>
+<a class="text-on-surface-variant dark:text-surface-variant font-body-md text-body-md hover:text-primary dark:hover:text-primary-fixed-dim transition-all underline decoration-2 underline-offset-4" href="#">Company</a>
+<a class="text-on-surface-variant dark:text-surface-variant font-body-md text-body-md hover:text-primary dark:hover:text-primary-fixed-dim transition-all underline decoration-2 underline-offset-4" href="#">Support</a>
+<a class="text-on-surface-variant dark:text-surface-variant font-body-md text-body-md hover:text-primary dark:hover:text-primary-fixed-dim transition-all underline decoration-2 underline-offset-4" href="#">Privacy</a>
+</div>
+<div class="text-on-surface-variant dark:text-surface-variant font-body-md text-body-md opacity-80 hover:opacity-100 transition-opacity">
+                © 2024 WriteFlow AI. Crafted for fluid intelligence.
+            </div>
+</div>
+</footer>
+</body></html>
